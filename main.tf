@@ -30,3 +30,11 @@ resource "aws_subnet" "album-private-subnet-1c" {
     Name = "album-private-subnet-1c"
   }
 }
+
+# gateway
+resource "aws_internet_gateway" "gateway_for_album" {
+  vpc_id = aws_vpc.vpc_for_album.id
+  tags = {
+    Name = "gateway_for_album"
+  }
+}
