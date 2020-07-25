@@ -38,3 +38,20 @@ resource "aws_internet_gateway" "gateway_for_album" {
     Name = "gateway_for_album"
   }
 }
+
+# route table
+resource "aws_route_table" "table_for_album" {
+  vpc_id = aws_vpc.vpc_for_album.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gateway_for_album.id
+  }
+  tags = {
+    Name = "table_for_album"
+  }
+}
+
+resource "aws_route_table_association" "public_subnet_association" {
+  subnet_id = aws_subnet.album-public-subnet-1a.id
+  route_table_id = aws_route_table.table_for_album.id
+}
